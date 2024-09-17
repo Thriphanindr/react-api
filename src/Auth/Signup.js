@@ -110,6 +110,12 @@ function Signup(){
                     <div>
                         <button className="btn btn-warning" onClick={e=>onhandCreateAccount(e)}>CreateAccount</button>
                     </div>
+                    <div>
+                        {apiSuccessmsg}
+                    </div>
+                    <div>
+                        {apiErrormsg}
+                    </div>
                 </div>
             </div>
         </div>
