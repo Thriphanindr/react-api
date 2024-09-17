@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { validateEmail } from "../Utilze/util";
-import axios from "axios";
+//import axios from "axios";
 
 function Signup(){
     var [Name ,setName] = useState("");
@@ -59,9 +59,11 @@ function Signup(){
 
     if(noError === 0){
         let apiInputData = {
-            'email':Email, 'name': Name, 'mobile':Mobile, 'password':Password,  
+            'email':Email, 'name': Name, 'mobile':Mobile, 'password':Password  
         }
-        axios.post('https://api.softwareschool.co/auth/signup',apiInputData)
+        console.log(apiInputData);
+        
+        //axios.post('https://api.softwareschool.co/auth/signup',apiInputData)
     }
 
     return(
