@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { validateEmail } from "../Utilze/util";
-//import axios from "axios";
+import axios from "axios";
 
 function Signup(){
     var [Name ,setName] = useState("");
@@ -11,6 +11,9 @@ function Signup(){
     var [EmailError,setEmailError] = useState("");
     var [MobileError,setMobileError] = useState("");
     var [PasswordError,setPasswordError] = useState("");
+
+    var [apiErrormsg,setapiErrormsg] = useState("");
+    var [apiSuccessmsg, setapiSuccessmsg] = useState("");
     
     function onhandName(e){
         setName(e.target.value)
@@ -29,7 +32,7 @@ function Signup(){
     }
     let noError = 0;
 
-    function onhandLogin(e){
+   async function onhandCreateAccount(e){
        if(Name.length < 3){
         setNameError("Min 3 char")
         noError++
@@ -55,15 +58,20 @@ function Signup(){
         setPasswordError("Enter valid password")
         noError++
        }
-    }
-
-    if(noError === 0){
-        let apiInputData = {
-            'email':Email, 'name': Name, 'mobile':Mobile, 'password':Password  
-        }
-        console.log(apiInputData);
+        if(noError === 0){
+            let apiInputData = {
+                'email':Email, 'name': Name, 'mobile':Mobile, 'password':Password 
+            }
+            var apireponse = await axios.post('https://api.softwareschool.co/auth/signup',apiInputData);
+            if(apireponse.data.result === "SUCCESS"){
+                setapiSuccessmsg(apireponse.data.message)
+                setapiErrormsg("")
+            }else{
+                setapiErrormsg(apireponse.data.message)
+                setapiSuccessmsg("")
+            }
+       }
         
-        //axios.post('https://api.softwareschool.co/auth/signup',apiInputData)
     }
 
     return(
@@ -100,7 +108,7 @@ function Signup(){
                         </div>
                     </div>
                     <div>
-                        <button className="btn btn-warning" onClick={e=>onhandLogin(e)}>CreateAccount</button>
+                        <button className="btn btn-warning" onClick={e=>onhandCreateAccount(e)}>CreateAccount</button>
                     </div>
                 </div>
             </div>
